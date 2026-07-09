@@ -86,10 +86,10 @@
     /* Game code field placed on the printed line */
     .game-code-hit{
       position:absolute;
-      left:43.2%;
-      top:27.72%;
-      width:14.9%;
-      height:2.7%;
+      left:46.55%;
+      top:29.42%;
+      width:12.35%;
+      height:2.45%;
       z-index:12;
       display:flex;
       align-items:center;
@@ -112,7 +112,7 @@
       text-transform:uppercase;
       padding:0;
       text-shadow:none;
-      transition:color .18s ease, transform .18s ease, text-align .12s ease, padding .12s ease;
+      transition:color .18s ease, transform .18s ease;
     }
 
     #gamecode:focus{
@@ -121,11 +121,6 @@
     }
 
     #gamecode::placeholder{ color:transparent; }
-
-    #gamecode.has-value{
-      text-align:left;
-      padding-left:2px;
-    }
 
     .join-hit{
       position:absolute;
@@ -591,10 +586,10 @@
       }
 
       .game-code-hit{
-        left:43.1%;
-        top:27.7%;
-        width:14.6%;
-        height:3.1%;
+        left:46.55%;
+        top:29.42%;
+        width:12.35%;
+        height:2.45%;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -604,11 +599,6 @@
         line-height:1;
         text-align:center;
         padding:0;
-      }
-
-      #gamecode.has-value{
-        text-align:left;
-        padding-left:2px;
       }
 
       .questions-area{
@@ -785,12 +775,6 @@
 
     function gameCode() {
       return (document.getElementById('gamecode').value || '').trim().toLowerCase();
-    }
-
-    function syncGameCodeAlignment() {
-      const input = document.getElementById('gamecode');
-      if (!input) return;
-      input.classList.toggle('has-value', input.value.trim().length > 0);
     }
 
 
@@ -1053,14 +1037,6 @@
     }
 
     renderQuestions(DEFAULT_QUESTIONS);
-
-    const gameCodeInput = document.getElementById('gamecode');
-    if (gameCodeInput) {
-      gameCodeInput.addEventListener('input', syncGameCodeAlignment);
-      gameCodeInput.addEventListener('blur', syncGameCodeAlignment);
-      gameCodeInput.addEventListener('focus', syncGameCodeAlignment);
-      syncGameCodeAlignment();
-    }
 
     setInterval(() => {
       if (scoreboardWrap.classList.contains('show')) refreshBoard();
