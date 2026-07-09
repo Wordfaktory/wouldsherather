@@ -37,6 +37,8 @@
     }
 
     body{
+      min-height:100vh;
+      min-height:100svh;
       padding:12px 8px 28px;
     }
 
@@ -145,41 +147,20 @@
       font-size:0;
       position:relative;
       overflow:hidden;
-      transition:transform .16s ease, box-shadow .16s ease, background .16s ease;
+      transition:transform .09s ease, background .12s ease;
       -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
     }
 
     #joinGameBtn:hover,
     #joinGameBtn:focus-visible{
-      transform:scale(1.03);
-      background:rgba(255,255,255,.14);
-      box-shadow:0 0 0 2px rgba(255,167,134,.28), 0 0 18px rgba(231,200,107,.22);
+      background:rgba(255,255,255,.10);
       outline:0;
     }
 
     #joinGameBtn:active{
-      transform:scale(.96);
-    }
-
-    #joinGameBtn::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      border-radius:inherit;
-      background:radial-gradient(circle, rgba(255,167,134,.46) 0%, rgba(231,200,107,.30) 36%, transparent 68%);
-      opacity:0;
-      transform:scale(.25);
-      pointer-events:none;
-    }
-
-    #joinGameBtn.is-clicking::before{
-      animation:joinRipple .58s ease-out;
-    }
-
-    @keyframes joinRipple{
-      0%{ opacity:.9; transform:scale(.25); }
-      78%{ opacity:.34; transform:scale(1.45); }
-      100%{ opacity:0; transform:scale(1.75); }
+      transform:scale(.985);
+      background:rgba(255,255,255,.16);
     }
 
     /* Real name typing field placed after the printed YOUR NAME label */
@@ -550,9 +531,60 @@
     }
 
     @media (max-width:480px){
-      body{ padding:0; background:#fff; }
-      .app{ max-width:none; }
-      .design-canvas{ box-shadow:none; }
+      html, body{
+        width:100%;
+        min-height:100%;
+        overflow-x:hidden;
+      }
+
+      body{
+        min-height:100vh;
+        min-height:100svh;
+        padding:0;
+        background:#fff;
+      }
+
+      .app{
+        width:100vw;
+        max-width:none;
+        min-height:100vh;
+        min-height:100svh;
+      }
+
+      .design-canvas{
+        width:100vw;
+        height:100vh;
+        height:100svh;
+        min-height:100vh;
+        min-height:100svh;
+        aspect-ratio:auto;
+        box-shadow:none;
+        background-size:100% 100%, auto;
+        background-position:center center;
+      }
+
+      @supports (height:100dvh){
+        body, .app, .design-canvas{
+          min-height:100dvh;
+        }
+        .design-canvas{
+          height:100dvh;
+        }
+      }
+
+      .game-code-hit{
+        left:39.9%;
+        top:27.45%;
+        width:20.9%;
+        height:3.55%;
+      }
+
+      #gamecode{
+        font-size:12px;
+        line-height:1;
+        text-align:left;
+        padding:0 2px .16em 2px;
+      }
 
       .questions-area{
         top:39.4%;
@@ -571,10 +603,10 @@
         border-width:1.2px;
       }
 
-      .or-text{ font-size:10px; }
+      .or-text{ font-size:9px; }
 
       .qrow{
-        grid-template-columns:minmax(0, 1fr) 20px minmax(0, 1fr);
+        grid-template-columns:minmax(0, 1fr) 18px minmax(0, 1fr);
         gap:5px;
       }
     }
@@ -587,7 +619,7 @@
         <div id="configWarning"></div>
 
         <div class="game-code-hit">
-          <input type="text" id="gamecode" placeholder="CODE" spellcheck="false" />
+          <input type="text" id="gamecode" placeholder="" aria-label="Game code" spellcheck="false" autocomplete="off" autocapitalize="characters" />
         </div>
 
         <div class="join-hit">
@@ -772,11 +804,6 @@
     const joinGameBtn = document.getElementById('joinGameBtn');
 
     joinGameBtn.addEventListener('click', () => {
-      joinGameBtn.classList.remove('is-clicking');
-      void joinGameBtn.offsetWidth;
-      joinGameBtn.classList.add('is-clicking');
-      setTimeout(() => joinGameBtn.classList.remove('is-clicking'), 580);
-
       loadQuestionsForGuest();
       refreshBoard();
     });
